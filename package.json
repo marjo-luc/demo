@@ -1,0 +1,25 @@
+{
+  "name": "us-population-density-map",
+  "version": "1.0.0",
+  "description": "Interactive US population density map by county",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "nodemon server/index.js",
+    "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-all": "npm install && cd client && npm install"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["react", "node", "map", "population", "density"],
+  "author": "",
+  "license": "MIT"
+} 
