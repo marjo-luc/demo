@@ -34,6 +34,27 @@
   padding: 0;
 }
 
+.github-btn {
+  display: inline-block;
+  margin: 1rem auto 0 auto;
+  padding: 0.5rem 1.5rem;
+  background: #24292f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.github-btn:hover, .github-btn:focus {
+  background: #0366d6;
+  color: #fff;
+  outline: none;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .map-container {

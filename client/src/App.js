@@ -1,7 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
+import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import axios from 'axios';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import 'leaflet-draw/dist/leaflet.draw.css';
+import 'leaflet-draw';
 import './App.css';
+
+// Helper component to add drawing controls
+function DrawControl({ onCreated }) {
+  const map = useMap();
+  useEffect(() => {
+    const drawnItems = new L.FeatureGroup();
+    map.addLayer(drawnItems);
+    const drawControl = new L.Control.Draw({
+      edit: { featureGroup: drawnItems },
+      draw: {
+        polygon: true,
+        polyline: true,
+        rectangle: true,
+        circle: true,
+        marker: true,
+        circlemarker: false
+      }
+    });
+    map.addControl(drawControl);
+    map.on(L.Draw.Event.CREATED, function (e) {
+      drawnItems.addLayer(e.layer);
+      if (onCreated) onCreated(e);
+    });
+    // Cleanup
+    return () => {
+      map.removeControl(drawControl);
+      map.removeLayer(drawnItems);
+    };
+  }, [map, onCreated]);
+  return null;
+}
 
 function App() {
   const [populationData, setPopulationData] = useState({});
@@ -111,6 +146,14 @@ function App() {
       <header className="header">
         <h1>US Population Density Map</h1>
         <p>Interactive visualization of population density by state across the United States</p>
+        <a
+          href="https://github.com/marjo-luc/demo"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="github-btn"
+        >
+          View on GitHub
+        </a>
       </header>
       
       <div className="map-container">
@@ -145,6 +188,8 @@ function App() {
               <p>Loading map data...</p>
             </div>
           )}
+          {/* Add drawing controls */}
+          <DrawControl />
         </MapContainer>
 
         {selectedState && (
